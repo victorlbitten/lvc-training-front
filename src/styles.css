@@ -31,4 +31,8 @@ body {
 
 .page-title {
   font-size: 2rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  align-items: center;
 }

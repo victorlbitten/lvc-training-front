@@ -1,9 +1,16 @@
 <div class="page-body">
-  <div class="page-title">
-    <button [routerLink]="['/datasets']" mat-raised-button color="basic">
-      <
-    </button>
-    <div></div>
-    <span>Details</span>
-  </div>
+  <ng-container *ngTemplateOutlet="header"></ng-container>
 </div>
+
+<ng-template #header>
+  <div class="page-header">
+    <div class="page-title">
+      <button [routerLink]="['/datasets']" mat-raised-button color="basic">
+        <
+      </button>
+      <div></div>
+      <span>{{datasetName}}</span>
+    </div>
+    <button mat-flat-button color="warn" (click)="deleteDataset()">Delete</button>
+  </div>
+</ng-template>

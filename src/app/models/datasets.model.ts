@@ -21,3 +21,7 @@ export interface Dataset {
 export interface GetAllDatasetsResponse extends NodeHttpResponse {
     data: DatasetName[];
 }
+
+export interface CreateDatasetResponse extends NodeHttpResponse {
+    data: DatasetName;
+}

@@ -26,4 +26,8 @@ export class DatasetService {
       .post<CreateDatasetResponse>(this.apiUrl, { name: datasetName })
       .pipe(map((response) => response.data));
   }
+
+  deleteDataset(datasetName: DatasetName): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${datasetName}`);
+  }
 }

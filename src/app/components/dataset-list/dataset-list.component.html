@@ -1,3 +1,30 @@
-<div *ngIf="datasetsNames$ | async as datasets">
-  <p *ngFor="let datasetName of datasets">{{datasetName}}</p>
+<div class="page-body">
+  <h1>Datasets</h1>
+
+  <ng-container *ngTemplateOutlet="datasetsList"></ng-container>
+
+  <div class="create-dataset-form">
+    <mat-form-field appearance="fill">
+      <mat-label>Dataset Name</mat-label>
+      <input matInput [(ngModel)]="newDatasetName" />
+    </mat-form-field>
+    <button mat-raised-button color="primary" (click)="onCreateDataset()">
+      Create Dataset
+    </button>
+  </div>
 </div>
+
+<ng-template #datasetsList>
+  <div
+    *ngIf="datasetsNames$ | async as datasets"
+    class="dataset-list-container"
+  >
+    <div
+      *ngFor="let dataset of datasets"
+      class="dataset-list-item"
+      [routerLink]="['/datasets', dataset]"
+    >
+      <span>{{ dataset }}</span>
+    </div>
+  </div></ng-template
+>

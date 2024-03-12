@@ -1,23 +1,15 @@
-.page-body {
-  width: 100vw;
-  height: 100vh;
-  padding: 1rem 2rem;
-  display: flex;
-  flex-direction: column;
+.dataset-list-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 1rem;
 }
 
-.dataset-list-container {
-  display: flex;
-  justify-content: flex-start;
-  flex-wrap: wrap;
-  gap: 1rem;
-}
 .dataset-list-container > div {
   flex: 1;
 }
 
 .dataset-list-item {
+  text-wrap: nowrap;
   background-color: #f0f0f0;
   color: #333;
   text-align: center;
@@ -28,4 +20,23 @@
 }
 .dataset-list-item:hover {
   background-color: #e0e0e0;
+}
+
+/* In your dataset-list.component.css */
+.form-overlay {
+  position: fixed; /* Fixed position relative to the viewport */
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  display: flex; /* Flexbox for centering */
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+  z-index: 1000; /* High z-index to be on top of other elements */
+}
+
+.mat-card {
+  width: 50%; /* Adjust width as needed */
+  /* Additional styling for the card */
 }

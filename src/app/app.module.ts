@@ -9,9 +9,10 @@ import { DatasetListComponent } from './components/dataset-list/dataset-list.com
 import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material/material.module';
+import { DatasetDetailsComponent } from './components/dataset-details/dataset-details.component';
 
 @NgModule({
-  declarations: [AppComponent, DatasetListComponent],
+  declarations: [AppComponent, DatasetListComponent, DatasetDetailsComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

@@ -1,8 +1,44 @@
 /* You can add global styles to this file, and also import other style files */
 
 * {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.page-body {
+  width: 100vw;
+  height: 100vh;
+  padding: 1rem 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  overflow: hidden;
+}
+
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+}
+
+.page-title {
+  font-size: 2rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  align-items: center;
+}
+
+.page-action-buttons {
+  display: flex;
+  gap: 1rem;
+}

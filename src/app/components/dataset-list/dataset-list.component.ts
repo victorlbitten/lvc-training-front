@@ -14,6 +14,7 @@ export class DatasetListComponent implements OnInit {
 
   // Creation
   newDatasetName: DatasetName = '';
+  showCreateForm = false;
 
   ngOnInit(): void {
     this.datasetsNames$ = this.datasetService.getAllDatasets();
@@ -24,6 +25,7 @@ export class DatasetListComponent implements OnInit {
       .createDataset(this.newDatasetName)
       .subscribe((response) => {
         this.datasetsNames$ = this.datasetService.getAllDatasets();
+        this.showCreateForm = false;
       });
   }
 
@@ -31,5 +33,9 @@ export class DatasetListComponent implements OnInit {
     this.datasetService.deleteDataset(datasetName).subscribe(() => {
       this.datasetsNames$ = this.datasetService.getAllDatasets();
     });
+  }
+
+  toggleCreateForm() {
+    this.showCreateForm = !this.showCreateForm;
   }
 }

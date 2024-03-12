@@ -3,8 +3,13 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, map } from 'rxjs';
 import {
   CreateDatasetResponse,
+  Dataset,
+  DatasetFolders,
   DatasetName,
   GetAllDatasetsResponse,
+  GetDatasetDetailsResponse,
+  Yolov5Category,
+  Yolov5Type,
 } from '../models/datasets.model';
 
 @Injectable({
@@ -29,5 +34,23 @@ export class DatasetService {
 
   deleteDataset(datasetName: DatasetName): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${datasetName}`);
+  }
+
+  getDatasetDetails(datasetName: DatasetName): Observable<DatasetFolders> {
+    return this.http
+      .get<GetDatasetDetailsResponse>(`${this.apiUrl}/${datasetName}`)
+      .pipe(map((response) => response.data.folders));
+  }
+
+  uploadDatasetFiles(
+    files: FormData,
+    category: 'train' | 'valid',
+    type: 'images' | 'labels',
+    datasetName: DatasetName
+  ) {
+    return this.http.post(
+      `${this.apiUrl}/${datasetName}/${category}/${type}`,
+      files
+    );
   }
 }

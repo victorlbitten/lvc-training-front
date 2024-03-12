@@ -1,4 +1,4 @@
-import { NodeHttpResponse } from "./general.model";
+import { NodeHttpResponse } from './general.model';
 
 type FileList = string[];
 
@@ -17,11 +17,24 @@ export interface Dataset {
   folders: DatasetFolders;
 }
 
-
 export interface GetAllDatasetsResponse extends NodeHttpResponse {
-    data: DatasetName[];
+  data: DatasetName[];
 }
 
 export interface CreateDatasetResponse extends NodeHttpResponse {
-    data: DatasetName;
+  data: DatasetName;
+}
+
+export interface GetDatasetDetailsResponse extends NodeHttpResponse {
+  data: Dataset;
+}
+
+export enum Yolov5Category {
+  Train = 'train',
+  Valid = 'valid',
+}
+
+export enum Yolov5Type {
+  Images = 'images',
+  Labels = 'labels',
 }

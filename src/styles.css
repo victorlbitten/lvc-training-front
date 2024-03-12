@@ -20,6 +20,7 @@ body {
   display: flex;
   flex-direction: column;
   gap: 2rem;
+  overflow: hidden;
 }
 
 .page-header {
@@ -35,4 +36,9 @@ body {
   align-items: flex-start;
   gap: 1rem;
   align-items: center;
+}
+
+.page-action-buttons {
+  display: flex;
+  gap: 1rem;
 }

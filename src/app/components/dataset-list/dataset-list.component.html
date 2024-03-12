@@ -1,0 +1,3 @@
+<div *ngIf="datasetsNames$ | async as datasets">
+  <p *ngFor="let datasetName of datasets">{{datasetName}}</p>
+</div>

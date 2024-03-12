@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DatasetService } from '../../services/dataset.service';
+import { Observable, map } from 'rxjs';
 
 @Component({
   selector: 'app-dataset-list',
@@ -8,6 +9,9 @@ import { DatasetService } from '../../services/dataset.service';
 })
 export class DatasetListComponent implements OnInit {
   constructor(private datasetService: DatasetService) {}
+  datasetsNames$: Observable<string[]>;
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.datasetsNames$ = this.datasetService.getAllDatasets();
+  }
 }

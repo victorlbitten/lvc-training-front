@@ -10,9 +10,10 @@ import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material/material.module';
 import { DatasetDetailsComponent } from './components/dataset-details/dataset-details.component';
+import { PictureAnnotatorComponent } from './components/picture-annotator/picture-annotator.component';
 
 @NgModule({
-  declarations: [AppComponent, DatasetListComponent, DatasetDetailsComponent],
+  declarations: [AppComponent, DatasetListComponent, DatasetDetailsComponent, PictureAnnotatorComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

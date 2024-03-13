@@ -30,7 +30,7 @@
       />
       <!-- ANNOTATE -->
       <button
-        [routerLink]="['/datasets', 'datasetName', 'annotate']"
+        [routerLink]="['/datasets', datasetName, 'annotate']"
         mat-raised-button
         color="basic"
       >
@@ -43,63 +43,6 @@
     </div>
   </div>
 </ng-template>
-
-<!-- <ng-template #folders>
-  <div class="folders-container">
-    <div class="folder-card">
-      <div class="folder-card-header">
-        <h2>Training pictures</h2>
-        <button
-          mat-raised-button
-          color="primary"
-          (click)="fileInputTrain.click()"
-        >
-          Add files
-        </button>
-        <input
-          type="file"
-          #fileInputTrain
-          style="display: none"
-          webkitdirectory
-          directory
-          (change)="uploadFiles($event, 'train')"
-          multiple
-        />
-      </div>
-      <div *ngIf="datasetFolders" class="pictures-grid">
-        <div *ngFor="let picture of datasetFolders.trainImagesFolder">
-          <img [src]="picture" alt="" class="grid-picture" />
-        </div>
-      </div>
-    </div>
-    <div class="folder-card">
-      <div class="folder-card-header">
-        <h2>Validation pictures</h2>
-        <button
-          mat-raised-button
-          color="primary"
-          (click)="fileInputValid.click()"
-        >
-          Add files
-        </button>
-        <input
-          type="file"
-          #fileInputValid
-          style="display: none"
-          webkitdirectory
-          directory
-          (change)="uploadFiles($event, 'valid')"
-          multiple
-        />
-      </div>
-      <div *ngIf="datasetFolders" class="pictures-grid">
-        <div *ngFor="let picture of datasetFolders.validImagesFolder">
-          <img [src]="picture" alt="" class="grid-picture" />
-        </div>
-      </div>
-    </div>
-  </div>
-</ng-template> -->
 
 <ng-template #test>
   <div class="grid-container">

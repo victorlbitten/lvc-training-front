@@ -19,7 +19,7 @@ export class DatasetDetailsComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private datasetService: DatasetService,
-    private folderData: YoloFolderDataService
+    private folderDataService: YoloFolderDataService
   ) {}
 
   ngOnInit() {
@@ -35,6 +35,7 @@ export class DatasetDetailsComponent implements OnInit {
       .subscribe((folders) => {
         this.datasetFolders = folders;
         this.setActiveTab(this.activeTab);
+        this.folderDataService.setDatasetFolders(folders, this.datasetName);
       });
   }
 
@@ -73,6 +74,5 @@ export class DatasetDetailsComponent implements OnInit {
       this.activeTab === 'train'
         ? this.datasetFolders.trainImagesFolder
         : this.datasetFolders.validImagesFolder;
-        console.log(this.shownPictures)
   }
 }

@@ -17,7 +17,7 @@ export class DatasetDetailsComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private datasetService: DatasetService
+    private datasetService: DatasetService,
   ) {}
 
   ngOnInit() {

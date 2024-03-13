@@ -28,6 +28,14 @@
         (change)="uploadFiles($event)"
         multiple
       />
+      <!-- ANNOTATE -->
+      <button
+        [routerLink]="['/datasets', 'datasetName', 'annotate']"
+        mat-raised-button
+        color="basic"
+      >
+        Annotate
+      </button>
       <!-- DELETE DATASET -->
       <button mat-flat-button color="warn" (click)="deleteDataset()">
         Delete

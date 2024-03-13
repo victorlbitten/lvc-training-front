@@ -9,6 +9,9 @@ import { DatasetListComponent } from './components/dataset-list/dataset-list.com
 import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material/material.module';
+import { FabricModule } from 'ngx-fabric-wrapper';
+
+
 import { DatasetDetailsComponent } from './components/dataset-details/dataset-details.component';
 import { PictureAnnotatorComponent } from './components/picture-annotator/picture-annotator.component';
 
@@ -21,6 +24,7 @@ import { PictureAnnotatorComponent } from './components/picture-annotator/pictur
     FormsModule,
     BrowserAnimationsModule,
     MaterialModule,
+    FabricModule
   ],
   providers: [],
   bootstrap: [AppComponent],

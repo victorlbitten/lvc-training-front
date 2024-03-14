@@ -2,9 +2,8 @@ import { Component, Host, HostListener, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { DatasetFolders, DatasetName } from 'src/app/models/datasets.model';
 import { YoloFolderDataService } from 'src/app/services/yolo-folder-data.service';
-import { fabric } from 'fabric';
-import { Canvas } from 'fabric/fabric-impl';
 import { ImageBrowserService } from 'src/app/services/image-browser.service';
+import { CanvasService } from 'src/app/services/canvas.service';
 
 @Component({
   selector: 'app-picture-annotator',
@@ -14,13 +13,13 @@ import { ImageBrowserService } from 'src/app/services/image-browser.service';
 export class PictureAnnotatorComponent implements OnInit {
   datasetName: DatasetName;
   datasetFolders: DatasetFolders;
-  canvas: Canvas;
   currentImage: HTMLImageElement;
   currentImageSrc: string;
 
   constructor(
     private datasetFoldersService: YoloFolderDataService,
     private imageBrosweService: ImageBrowserService,
+    private canvasService: CanvasService,
     private route: ActivatedRoute
   ) {}
 
@@ -28,6 +27,7 @@ export class PictureAnnotatorComponent implements OnInit {
   ngOnInit() {
     this.getRouteParams();
     this.getDatasetFolders();
+    this.canvasService.initializeCanvas('annotationCanvas');
   }
 
   getRouteParams() {
@@ -46,12 +46,12 @@ export class PictureAnnotatorComponent implements OnInit {
       });
   }
 
-
   // IMAGE HANDLING
   async loadImage() {
     try {
       this.currentImage = await this.imageBrosweService.getCurrentImage();
       this.currentImageSrc = this.currentImage.src;
+      this.canvasService.setBackgroundImage(this.currentImageSrc);
     } catch (err) {
       console.error(err);
     }
@@ -66,8 +66,6 @@ export class PictureAnnotatorComponent implements OnInit {
     await this.imageBrosweService.nextImage();
     this.loadImage();
   }
-
-
 
   // SHORTCUTS
   @HostListener('window:keydown', ['$event'])

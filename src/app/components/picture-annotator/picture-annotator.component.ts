@@ -24,6 +24,7 @@ export class PictureAnnotatorComponent implements OnInit {
     private route: ActivatedRoute
   ) {}
 
+  // INITIALIZATION
   ngOnInit() {
     this.getRouteParams();
     this.getDatasetFolders();
@@ -45,6 +46,8 @@ export class PictureAnnotatorComponent implements OnInit {
       });
   }
 
+
+  // IMAGE HANDLING
   async loadImage() {
     try {
       this.currentImage = await this.imageBrosweService.getCurrentImage();
@@ -64,6 +67,9 @@ export class PictureAnnotatorComponent implements OnInit {
     this.loadImage();
   }
 
+
+
+  // SHORTCUTS
   @HostListener('window:keydown', ['$event'])
   onKeyDown(event: KeyboardEvent) {
     if (event.key === 'ArrowRight' || event.key === 'e') {

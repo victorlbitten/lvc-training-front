@@ -1,18 +1,21 @@
 import { Injectable } from '@angular/core';
 import { fabric } from 'fabric';
-import { ImageBrowserService } from './image-browser.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CanvasService {
   private canvas: fabric.Canvas;
+  private currentRect: fabric.Rect | null = null;
+  private origX = 0;
+  private origY = 0;
+  private isDrawing = false;
 
-  constructor(private imageBrowserService: ImageBrowserService) {}
+  constructor() {}
 
   // INITIALIZATION
   public initializeCanvas(canvasElementId: string): void {
-    this.canvas = new fabric.Canvas(canvasElementId);
+    this.canvas = new fabric.Canvas(canvasElementId, { selection: false });
     this.initializeRectangleDrawing();
   }
 
@@ -23,11 +26,65 @@ export class CanvasService {
   }
 
   // MOUSE EVENTS
-  private onMouseDown(o: fabric.IEvent) {}
+  private onMouseDown(o: fabric.IEvent) {
+    if (this.canvas.getActiveObject()) {
+      this.isDrawing = false;
+      return;
+    }
+    let pointer = this.canvas.getPointer(o.e);
+    this.origX = pointer.x;
+    this.origY = pointer.y;
+    this.isDrawing = true;
 
-  private onMouseMove(o: fabric.IEvent) {}
+    this.currentRect = this.createRectangle(pointer);
+    this.canvas.add(this.currentRect);
+    this.canvas.setActiveObject(this.currentRect);
+  }
 
-  private onMouseUp(o: fabric.IEvent) {}
+  private onMouseMove(o: fabric.IEvent) {
+    if (!this.isDrawing || !this.currentRect) return;
+    let pointer = this.canvas.getPointer(o.e);
+
+    if (this.origX > pointer.x) {
+      this.currentRect.set({ left: pointer.x });
+    }
+    if (this.origY > pointer.y) {
+      this.currentRect.set({ top: pointer.y });
+    }
+
+    this.currentRect.set({ width: Math.abs(this.origX - pointer.x) });
+    this.currentRect.set({ height: Math.abs(this.origY - pointer.y) });
+
+    this.canvas.renderAll();
+  }
+
+  private onMouseUp(o: fabric.IEvent) {
+    this.isDrawing = false;
+    this.removeIfNoSize();
+  }
+
+  createRectangle(pointer: { x: number; y: number }): fabric.Rect {
+    return new fabric.Rect({
+      left: this.origX,
+      top: this.origY,
+      originX: 'left',
+      originY: 'top',
+      width: pointer.x - this.origX,
+      height: pointer.y - this.origY,
+      angle: 0,
+      fill: 'transparent',
+      stroke: 'red',
+      strokeWidth: 2,
+      transparentCorners: false,
+    });
+  }
+
+  private removeIfNoSize() {
+    if (this.currentRect && this.currentRect.width === 0) {
+      this.canvas.remove(this.currentRect);
+      this.currentRect = null;
+    }
+  }
 
   // BACKGROUND IMAGE
   public async setBackgroundImage(url: string): Promise<void> {

@@ -48,9 +48,9 @@
 </ng-template>
 
 <ng-template #actionBtns>
-  <div class="action-buttons">
+  <div class="action-buttons" *ngIf="!loadingPicture">
     <button mat-raised-button color="default"><</button>
-    <span>3/12</span>
+    <span>{{currentImageIndex+1}}/{{numberOfImages}}</span>
     <button mat-raised-button color="default">></button>
   </div>
 </ng-template>

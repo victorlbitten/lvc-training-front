@@ -6,12 +6,22 @@ import { Injectable } from '@angular/core';
 export class ImageBrowserService {
   private imageUrls: string[] = [];
   private currentIndex: number = 0;
+  private numberOfImages: number = 0;
 
   constructor() {}
 
   public initialize(imageUrls: string[]) {
     this.imageUrls = imageUrls;
     this.currentIndex = 0;
+    this.numberOfImages = imageUrls.length;
+  }
+
+  getNumberOfImages(): number {
+    return this.numberOfImages;
+  }
+
+  getCurrentIndex(): number {
+    return this.currentIndex;
   }
 
   private async loadImage(url: string): Promise<HTMLImageElement> {

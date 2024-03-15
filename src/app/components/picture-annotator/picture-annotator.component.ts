@@ -17,6 +17,8 @@ export class PictureAnnotatorComponent implements OnInit {
   currentImage: HTMLImageElement;
   currentImageSrc: string;
   loadingPicture = true;
+  currentImageIndex:number;
+  numberOfImages:number;
 
   annotations: Map<string, Yolov5Rect> = new Map();
 
@@ -46,6 +48,7 @@ export class PictureAnnotatorComponent implements OnInit {
         this.imageBrosweService.initialize(
           this.datasetFolders.trainImagesFolder
         );
+        this.numberOfImages = this.imageBrosweService.getNumberOfImages();
         this.loadImage();
         this.loadingPicture = false;
       });
@@ -55,6 +58,7 @@ export class PictureAnnotatorComponent implements OnInit {
   async loadImage() {
     try {
       this.currentImage = await this.imageBrosweService.getCurrentImage();
+      this.currentImageIndex = this.imageBrosweService.getCurrentIndex();
       this.currentImageSrc = this.currentImage.src;
       this.canvasService.setBackgroundImage(this.currentImageSrc);
     } catch (err) {

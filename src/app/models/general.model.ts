@@ -3,3 +3,8 @@ export interface NodeHttpResponse {
     message: string;
     data?: any;
 }
+
+export interface Yolov5Rect extends fabric.Rect {
+    id?: number | string;
+    class?: string;    
+}

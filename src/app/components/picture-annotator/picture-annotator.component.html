@@ -11,27 +11,6 @@
   <ng-container *ngTemplateOutlet="actionBtns"></ng-container>
 </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <!-- ----------------------------------- -----------------------------------
   TEMPLATES
    ------------------------------------------------------------------------>
@@ -81,35 +60,40 @@
 <ng-template #classList>
   <div class="class-list">
     <h3>Classes</h3>
-    <p
+    <ng-container
       *ngFor="
         let class of [
-          'cat1',
-          'cat2',
-          'asdfasdf',
-          'cat1',
-          'cat2',
-          'asdfasdf',
-          'cat1',
-          'cat2',
-          'asdfasdf',
-          'cat1',
-          'cat2',
-          'asdfasdf',
-          'cat1',
-          'cat2',
-          'asdfasdf',
-          'cat1',
-          'cat2',
-          'asdfasdf',
-          'cat1',
-          'cat2',
-          'asdfasdf'
+          'DEG',
+          'SEG',
+          'J',
+          'BAF',
+          'RP',
+          'P',
+          'RS',
+          'PL',
+          'JE',
+          'RL',
+          'ATC',
+          'ATP',
+          'QM',
+          'E',
+          'EB',
+          'RD',
+          'O',
+          'EG',
+          'BAF_VERMELHA',
+          'SO',
+          'TT',
+          'TL',
+          'EX',
+          'AR',
+          'BG'
         ]
       "
-      class="class-list-item"
     >
-      {{ class }}
-    </p>
+      <div (click)="addAnnotation(class)" class="class-list-item">
+        {{ class }}
+      </div>
+    </ng-container>
   </div>
 </ng-template>

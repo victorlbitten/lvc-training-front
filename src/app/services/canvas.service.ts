@@ -74,7 +74,7 @@ export class CanvasService {
       width: pointer.x - this.origX,
       height: pointer.y - this.origY,
       angle: 0,
-      fill: 'transparent',
+      fill: 'rgb(255,0,0,0.1)',
       stroke: 'red',
       strokeWidth: 2,
       transparentCorners: false,
@@ -107,12 +107,30 @@ export class CanvasService {
 
   public clearRectangles(): void {
     this.rectId = 1;
-    const objects = this.canvas.getObjects();
+    const objects = this.canvas.getObjects() as Yolov5Rect[];
+    console.log(objects);
     for (let i = objects.length - 1; i >= 0; i--) {
-      if (objects[i] instanceof fabric.Rect) {
-        this.canvas.remove(objects[i]);
-      }
+      const object: Yolov5Rect = objects[i];
+      if (object.text) this.canvas.remove(object.text);
+      this.canvas.remove(object);
     }
+  }
+
+  public addTextToRectangle(rectangle: Yolov5Rect, textValue: string): void {
+    if (!rectangle.top || !rectangle.left) return;
+    const text = new fabric.Text(textValue, {
+      fontSize: 18, // Example font size
+      fill: 'red', // Example text color
+      left: rectangle.left, // Align with the left edge of the rectangle
+      top: rectangle.top - 20, // Position above the rectangle; adjust as needed
+      selectable: false,
+    });
+
+    rectangle.text = text;
+    this.canvas.add(text);
+    this.attachTextToRectangle(rectangle, text);
+    this.canvas.renderAll();
+    this.canvas.discardActiveObject().renderAll();
   }
 
   public getActiveRectangle(): Yolov5Rect | null {
@@ -121,6 +139,20 @@ export class CanvasService {
       return activeObject;
     }
     return null;
+  }
+
+  private attachTextToRectangle(
+    rectangle: Yolov5Rect,
+    text: fabric.Text
+  ): void {
+    rectangle.on('moving', () => {
+      if (!rectangle.top) return;
+      text.set({
+        left: rectangle.left,
+        top: rectangle.top - 20, // Adjust this value as necessary
+      });
+      this.canvas.renderAll();
+    });
   }
 
   // BACKGROUND IMAGE

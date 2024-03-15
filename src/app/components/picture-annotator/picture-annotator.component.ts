@@ -103,6 +103,7 @@ export class PictureAnnotatorComponent implements OnInit {
       activeRectangle.class = category;
       this.annotations.set(activeRectangle.id.toString(), activeRectangle);
       console.log(this.annotations);
+      this.canvasService.addTextToRectangle(activeRectangle, category);
     }
   }
 }

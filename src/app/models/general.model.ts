@@ -6,5 +6,6 @@ export interface NodeHttpResponse {
 
 export interface Yolov5Rect extends fabric.Rect {
     id?: number | string;
-    class?: string;    
+    class?: string;
+    text?: fabric.Text;
 }

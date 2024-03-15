@@ -48,4 +48,12 @@ export class ImageBrowserService {
       (this.currentIndex - 1 + this.imageUrls.length) % this.imageUrls.length;
     return this.getCurrentImage();
   }
+
+  public async jumpToImageFromUrl(url: string) {
+    const index = this.imageUrls.indexOf(url);
+    if (index !== -1) {
+      this.currentIndex = index;
+    }
+  }
+
 }

@@ -42,7 +42,7 @@
       class="picItem"
       *ngFor="let picUrl of datasetFolders.trainImagesFolder"
     >
-      <img [src]="picUrl" class="picture-list-item" />
+      <img [src]="picUrl" class="picture-list-item" (click)="jumpToImageFromUrl(picUrl)"/>
     </div>
   </div>
 </ng-template>

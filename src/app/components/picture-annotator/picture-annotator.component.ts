@@ -66,6 +66,11 @@ export class PictureAnnotatorComponent implements OnInit {
     }
   }
 
+  async jumpToImageFromUrl(url: string) {
+    await this.imageBrosweService.jumpToImageFromUrl(url);
+    this.loadImage();
+  }
+
   async onPreviousImage() {
     await this.imageBrosweService.previousImage();
     this.loadImage();

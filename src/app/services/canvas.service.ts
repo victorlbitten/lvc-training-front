@@ -1,15 +1,17 @@
 import { Injectable } from '@angular/core';
 import { fabric } from 'fabric';
+import { Yolov5Rect } from '../models/general.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CanvasService {
   private canvas: fabric.Canvas;
-  private currentRect: fabric.Rect | null = null;
+  private currentRect: Yolov5Rect | null = null;
   private origX = 0;
   private origY = 0;
   private isDrawing = false;
+  private rectId = 1;
 
   constructor() {}
 
@@ -63,8 +65,8 @@ export class CanvasService {
     this.removeIfNoSize();
   }
 
-  createRectangle(pointer: { x: number; y: number }): fabric.Rect {
-    return new fabric.Rect({
+  createRectangle(pointer: { x: number; y: number }): Yolov5Rect {
+    const rect: Yolov5Rect = new fabric.Rect({
       left: this.origX,
       top: this.origY,
       originX: 'left',
@@ -77,6 +79,16 @@ export class CanvasService {
       strokeWidth: 2,
       transparentCorners: false,
     });
+    rect.setControlsVisibility({
+      mt: true, // middle top disable
+      mb: true, // middle bottom disable
+      ml: true, // middle left disable
+      mr: true, // middle right disable
+      mtr: false, // top rotate disable
+    });
+    rect.id = this.rectId++;
+
+    return rect;
   }
 
   private removeIfNoSize() {
@@ -86,8 +98,34 @@ export class CanvasService {
     }
   }
 
+  public removeActiveRectangle(): void {
+    const activeObject = this.canvas.getActiveObject();
+    if (activeObject instanceof fabric.Rect) {
+      this.canvas.remove(activeObject);
+    }
+  }
+
+  public clearRectangles(): void {
+    this.rectId = 1;
+    const objects = this.canvas.getObjects();
+    for (let i = objects.length - 1; i >= 0; i--) {
+      if (objects[i] instanceof fabric.Rect) {
+        this.canvas.remove(objects[i]);
+      }
+    }
+  }
+
+  public getActiveRectangle(): Yolov5Rect | null {
+    const activeObject = this.canvas.getActiveObject();
+    if (activeObject instanceof fabric.Rect) {
+      return activeObject;
+    }
+    return null;
+  }
+
   // BACKGROUND IMAGE
   public async setBackgroundImage(url: string): Promise<void> {
+    this.clearRectangles();
     try {
       const image = await new Promise<fabric.Image>((resolve, reject) => {
         fabric.Image.fromURL(url, (img) => {
@@ -107,7 +145,7 @@ export class CanvasService {
       )
         return;
       // Set canvas dimensions
-      this.canvas.setWidth(1280);
+      this.canvas.setWidth(1080);
       this.canvas.setHeight(720);
 
       // Adjust image scale to fit within the canvas

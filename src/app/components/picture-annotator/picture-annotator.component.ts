@@ -4,6 +4,7 @@ import { DatasetFolders, DatasetName } from 'src/app/models/datasets.model';
 import { YoloFolderDataService } from 'src/app/services/yolo-folder-data.service';
 import { ImageBrowserService } from 'src/app/services/image-browser.service';
 import { CanvasService } from 'src/app/services/canvas.service';
+import { Yolov5Rect } from 'src/app/models/general.model';
 
 @Component({
   selector: 'app-picture-annotator',
@@ -15,6 +16,8 @@ export class PictureAnnotatorComponent implements OnInit {
   datasetFolders: DatasetFolders;
   currentImage: HTMLImageElement;
   currentImageSrc: string;
+
+  annotations: Map<string, Yolov5Rect> = new Map();
 
   constructor(
     private datasetFoldersService: YoloFolderDataService,
@@ -70,10 +73,25 @@ export class PictureAnnotatorComponent implements OnInit {
   // SHORTCUTS
   @HostListener('window:keydown', ['$event'])
   onKeyDown(event: KeyboardEvent) {
+    // Navigation
     if (event.key === 'ArrowRight' || event.key === 'e') {
       this.onNextImage();
     } else if (event.key === 'ArrowLeft' || event.key === 'q') {
       this.onPreviousImage();
+    }
+    // Deletion
+    if (event.key === 'x') {
+      this.canvasService.removeActiveRectangle();
+    }
+  }
+
+  addAnnotation(category: string) {
+    const activeRectangle =
+      this.canvasService.getActiveRectangle() as Yolov5Rect;
+    if (activeRectangle && activeRectangle.id) {
+      activeRectangle.class = category;
+      this.annotations.set(activeRectangle.id.toString(), activeRectangle);
+      console.log(this.annotations);
     }
   }
 }

@@ -16,6 +16,7 @@ export class PictureAnnotatorComponent implements OnInit {
   datasetFolders: DatasetFolders;
   currentImage: HTMLImageElement;
   currentImageSrc: string;
+  loadingPicture = true;
 
   annotations: Map<string, Yolov5Rect> = new Map();
 
@@ -46,6 +47,7 @@ export class PictureAnnotatorComponent implements OnInit {
           this.datasetFolders.trainImagesFolder
         );
         this.loadImage();
+        this.loadingPicture = false;
       });
   }
 

@@ -1,5 +1,4 @@
-<!-- <fabric [useFabricClass]="true" id="annotationCanvas"></fabric> -->
-<canvas id="annotationCanvas"></canvas>
+<!-- 
 
 <div>
   <p
@@ -9,4 +8,58 @@
   >
     {{ class }}
   </p>
+</div> -->
+
+<div class="container">
+  <ng-container *ngTemplateOutlet="header"></ng-container>
+  <ng-container *ngTemplateOutlet="picList"></ng-container>
+  <div class="canvas-container">
+    <canvas id="annotationCanvas"></canvas>
+  </div>
+  <ng-container *ngTemplateOutlet="classList"></ng-container>
+  <ng-container *ngTemplateOutlet="actionBtns"></ng-container>
 </div>
+
+<ng-template #header>
+  <div class="header page-header">
+    <div class="page-title">
+      <button mat-raised-button><</button>
+      <span>
+        {{ datasetName }}
+      </span>
+    </div>
+    <div class="page-action-buttons">
+      <span>Training</span>
+      <span>Validation</span>
+      <button mat-raised-button color="primary">Finish</button>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #picList>
+  <div class="pictures-list" *ngIf="!loadingPicture">
+    <div
+      class="picItem"
+      *ngFor="let picUrl of datasetFolders.trainImagesFolder"
+    >
+      <img [src]="picUrl" class="picture-list-item" />
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #actionBtns>
+  <div class="action-buttons">
+    <button mat-raised-button color="default"><</button>
+    <span>3/12</span>
+    <button mat-raised-button color="default">></button>
+  </div>
+</ng-template>
+
+<ng-template #classList>
+  <div class="class-list">
+    <h3>Classes</h3>
+    <p *ngFor="let class of ['cat1', 'cat2', 'asdfasdf', 'cat1', 'cat2', 'asdfasdf', 'cat1', 'cat2', 'asdfasdf','cat1', 'cat2', 'asdfasdf','cat1', 'cat2', 'asdfasdf','cat1', 'cat2', 'asdfasdf','cat1', 'cat2', 'asdfasdf']" class="class-list-item">
+      {{ class }}
+    </p>
+  </div>
+</ng-template>

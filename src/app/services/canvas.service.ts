@@ -47,15 +47,30 @@ export class CanvasService {
     if (!this.isDrawing || !this.currentRect) return;
     let pointer = this.canvas.getPointer(o.e);
 
-    if (this.origX > pointer.x) {
-      this.currentRect.set({ left: pointer.x });
+    // Calculate width and height based on the original and current pointer positions
+    let width = Math.abs(this.origX - pointer.x);
+    let height = Math.abs(this.origY - pointer.y);
+
+    // Calculate the rectangle's position
+    let left = pointer.x < this.origX ? pointer.x : this.origX;
+    let top = pointer.y < this.origY ? pointer.y : this.origY;
+
+    // Constrain the rectangle within the canvas boundaries
+    if (!this.canvas.width || !this.canvas.height) return;
+    if (left + width > this.canvas.width) {
+      width = this.canvas.width - left;
     }
-    if (this.origY > pointer.y) {
-      this.currentRect.set({ top: pointer.y });
+    if (top + height > this.canvas.height) {
+      height = this.canvas.height - top;
     }
 
-    this.currentRect.set({ width: Math.abs(this.origX - pointer.x) });
-    this.currentRect.set({ height: Math.abs(this.origY - pointer.y) });
+    // Update the rectangle's position and size
+    this.currentRect.set({
+      left: left,
+      top: top,
+      width: width,
+      height: height,
+    });
 
     this.canvas.renderAll();
   }
@@ -87,6 +102,9 @@ export class CanvasService {
       mtr: false, // top rotate disable
     });
     rect.id = this.rectId++;
+    rect.on('moving', () => {
+      this.constrainRectWithinCanvas(rect);
+    });
 
     return rect;
   }
@@ -198,6 +216,25 @@ export class CanvasService {
       );
     } catch (error) {
       console.error('Error in setting canvas background', error);
+    }
+  }
+
+  private constrainRectWithinCanvas(rect: Yolov5Rect) {
+    if (!rect.left || !rect.top || !rect.width || !rect.height) return;
+    if (!this.canvas.width || !this.canvas.height) return;
+
+    // Constrain horizontally
+    if (rect.left < 0) {
+      rect.left = 0;
+    } else if (rect.left + rect.width > this.canvas.width) {
+      rect.left = this.canvas.width - rect.width;
+    }
+
+    // Constrain vertically
+    if (rect.top < 0) {
+      rect.top = 0;
+    } else if (rect.top + rect.height > this.canvas.height) {
+      rect.top = this.canvas.height - rect.height;
     }
   }
 }

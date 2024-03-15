@@ -17,8 +17,9 @@ export class PictureAnnotatorComponent implements OnInit {
   currentImage: HTMLImageElement;
   currentImageSrc: string;
   loadingPicture = true;
-  currentImageIndex:number;
-  numberOfImages:number;
+  currentImageIndex: number;
+  numberOfImages: number;
+  lastUsedClass = 'J';
 
   annotations: Map<string, Yolov5Rect> = new Map();
 
@@ -94,6 +95,10 @@ export class PictureAnnotatorComponent implements OnInit {
     if (event.key === 'x') {
       this.canvasService.removeActiveRectangle();
     }
+    if (event.key === 'n') {
+      this.addAnnotation(this.lastUsedClass);
+    }
+
   }
 
   addAnnotation(category: string) {
@@ -104,6 +109,7 @@ export class PictureAnnotatorComponent implements OnInit {
       this.annotations.set(activeRectangle.id.toString(), activeRectangle);
       console.log(this.annotations);
       this.canvasService.addTextToRectangle(activeRectangle, category);
+      this.lastUsedClass = category;
     }
   }
 }

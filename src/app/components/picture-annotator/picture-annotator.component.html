@@ -1,15 +1,6 @@
-<!-- 
-
-<div>
-  <p
-    *ngFor="let class of ['cat1', 'cat2', 'cat3']"
-    (click)="addAnnotation(class)"
-    style="padding: 1rem; border: 1px solid; cursor: pointer"
-  >
-    {{ class }}
-  </p>
-</div> -->
-
+<!-- ----------------------------------- -----------------------------------
+  LAYOUT
+   ------------------------------------------------------------------------>
 <div class="container">
   <ng-container *ngTemplateOutlet="header"></ng-container>
   <ng-container *ngTemplateOutlet="picList"></ng-container>
@@ -20,10 +11,36 @@
   <ng-container *ngTemplateOutlet="actionBtns"></ng-container>
 </div>
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- ----------------------------------- -----------------------------------
+  TEMPLATES
+   ------------------------------------------------------------------------>
 <ng-template #header>
   <div class="header page-header">
     <div class="page-title">
-      <button mat-raised-button><</button>
+      <button mat-raised-button [routerLink]="['/datasets', datasetName]">
+        <
+      </button>
       <span>
         {{ datasetName }}
       </span>
@@ -42,15 +59,21 @@
       class="picItem"
       *ngFor="let picUrl of datasetFolders.trainImagesFolder"
     >
-      <img [src]="picUrl" class="picture-list-item" (click)="jumpToImageFromUrl(picUrl)"/>
+      <img
+        [src]="picUrl"
+        class="picture-list-item"
+        (click)="jumpToImageFromUrl(picUrl)"
+      />
     </div>
   </div>
 </ng-template>
 
 <ng-template #actionBtns>
   <div class="action-buttons" *ngIf="!loadingPicture">
-    <button mat-raised-button color="default" (click)="onPreviousImage()"><</button>
-    <span>{{currentImageIndex+1}}/{{numberOfImages}}</span>
+    <button mat-raised-button color="default" (click)="onPreviousImage()">
+      <
+    </button>
+    <span>{{ currentImageIndex + 1 }}/{{ numberOfImages }}</span>
     <button mat-raised-button color="default" (click)="onNextImage()">></button>
   </div>
 </ng-template>
@@ -58,7 +81,34 @@
 <ng-template #classList>
   <div class="class-list">
     <h3>Classes</h3>
-    <p *ngFor="let class of ['cat1', 'cat2', 'asdfasdf', 'cat1', 'cat2', 'asdfasdf', 'cat1', 'cat2', 'asdfasdf','cat1', 'cat2', 'asdfasdf','cat1', 'cat2', 'asdfasdf','cat1', 'cat2', 'asdfasdf','cat1', 'cat2', 'asdfasdf']" class="class-list-item">
+    <p
+      *ngFor="
+        let class of [
+          'cat1',
+          'cat2',
+          'asdfasdf',
+          'cat1',
+          'cat2',
+          'asdfasdf',
+          'cat1',
+          'cat2',
+          'asdfasdf',
+          'cat1',
+          'cat2',
+          'asdfasdf',
+          'cat1',
+          'cat2',
+          'asdfasdf',
+          'cat1',
+          'cat2',
+          'asdfasdf',
+          'cat1',
+          'cat2',
+          'asdfasdf'
+        ]
+      "
+      class="class-list-item"
+    >
       {{ class }}
     </p>
   </div>

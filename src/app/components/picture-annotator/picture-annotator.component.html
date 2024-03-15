@@ -49,9 +49,9 @@
 
 <ng-template #actionBtns>
   <div class="action-buttons" *ngIf="!loadingPicture">
-    <button mat-raised-button color="default"><</button>
+    <button mat-raised-button color="default" (click)="onPreviousImage()"><</button>
     <span>{{currentImageIndex+1}}/{{numberOfImages}}</span>
-    <button mat-raised-button color="default">></button>
+    <button mat-raised-button color="default" (click)="onNextImage()">></button>
   </div>
 </ng-template>
 

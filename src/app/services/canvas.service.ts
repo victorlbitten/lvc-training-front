@@ -47,16 +47,13 @@ export class CanvasService {
     if (!this.isDrawing || !this.currentRect) return;
     let pointer = this.canvas.getPointer(o.e);
 
-    // Calculate width and height based on the original and current pointer positions
     let width = Math.abs(this.origX - pointer.x);
     let height = Math.abs(this.origY - pointer.y);
+    let left = this.origX;
+    let top = this.origY;
 
-    // Calculate the rectangle's position
-    let left = pointer.x < this.origX ? pointer.x : this.origX;
-    let top = pointer.y < this.origY ? pointer.y : this.origY;
-
-    // Constrain the rectangle within the canvas boundaries
     if (!this.canvas.width || !this.canvas.height) return;
+    // Adjust for right and bottom boundaries
     if (left + width > this.canvas.width) {
       width = this.canvas.width - left;
     }
@@ -64,13 +61,17 @@ export class CanvasService {
       height = this.canvas.height - top;
     }
 
-    // Update the rectangle's position and size
-    this.currentRect.set({
-      left: left,
-      top: top,
-      width: width,
-      height: height,
-    });
+    // Adjust for left and top boundaries
+    if (left < 0) {
+      left = 0;
+      width = this.origX;
+    }
+    if (top < 0) {
+      top = 0;
+      height = this.origY;
+    }
+
+    this.currentRect.set({ left, top, width, height });
 
     this.canvas.renderAll();
   }
